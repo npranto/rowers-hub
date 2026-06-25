@@ -2,16 +2,21 @@
   "name": "rowers-hub",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.9.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "healthcheck": "pnpm run lint && pnpm run build",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "server-only": "^0.0.1",
+    "stripe": "^22.2.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

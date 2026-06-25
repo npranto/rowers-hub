@@ -1,0 +1,7 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" fill="#F5F0E8"/>
+  <path d="M240 560 C420 260 760 260 960 560" stroke="#101820" stroke-width="54" stroke-linecap="round"/>
+  <circle cx="880" cy="260" r="230" fill="#C49A6C" opacity="0.5"/>
+  <text x="90" y="130" fill="#101820" font-family="Arial" font-size="64" font-weight="700">Hydrow Arc</text>
+  <text x="92" y="190" fill="#7D5A3C" font-family="Arial" font-size="30">Strength and recovery companion</text>
+</svg>
