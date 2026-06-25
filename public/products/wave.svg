@@ -1,0 +1,8 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" fill="#E8F1F2"/>
+  <circle cx="850" cy="260" r="300" fill="#6AA6A8" opacity="0.55"/>
+  <rect x="240" y="500" width="720" height="48" rx="24" fill="#1B2A2F"/>
+  <rect x="360" y="370" width="210" height="135" rx="22" fill="#FFFFFF"/>
+  <text x="90" y="130" fill="#1B2A2F" font-family="Arial" font-size="64" font-weight="700">Hydrow Wave</text>
+  <text x="92" y="190" fill="#3F6B70" font-family="Arial" font-size="30">Compact, quiet, apartment-friendly</text>
+</svg>
