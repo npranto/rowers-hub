@@ -1,28 +1,27 @@
-import type { ShowcaseComponent } from "./types";
+/**
+ * Adding a showcased component:
+ * 1. Create the UI component at src/components/ui/{slug}/index.tsx
+ * 2. Create a showcase config at src/lib/ui-showcase/showcases/{slug}.tsx
+ *    using show() for JSX previews and group() for sections
+ * 3. Import it below and add to the showcaseComponents allowlist
+ */
+import { buttonShowcase } from "./showcases/button";
+import { headingShowcase } from "./showcases/heading";
+import type { ShowcaseConfig } from "./types";
 
-export const showcaseComponents: ShowcaseComponent[] = [
-  {
-    slug: "button",
-    name: "Button",
-    description: "Interactive control for actions, forms, and navigation.",
-    importPath: "@/components/ui/button",
-    status: "stable",
-    route: "/internal/ui/button",
-  },
-  {
-    slug: "heading",
-    name: "Heading",
-    description: "Typography component for page titles, section headers, and content hierarchy.",
-    importPath: "@/components/ui/heading",
-    status: "stable",
-    route: "/internal/heading",
-  },
+export const showcaseComponents: ShowcaseConfig[] = [
+  buttonShowcase,
+  headingShowcase,
 ];
 
-export function getShowcaseRoute(component: ShowcaseComponent) {
-  return component.route ?? `/internal/ui/${component.slug}`;
+export function getShowcaseRoute(component: Pick<ShowcaseConfig, "slug">) {
+  return `/internal/ui/${component.slug}`;
 }
 
 export function getShowcaseComponent(slug: string) {
   return showcaseComponents.find((component) => component.slug === slug);
+}
+
+export function getAllShowcaseSlugs() {
+  return showcaseComponents.map((component) => component.slug);
 }

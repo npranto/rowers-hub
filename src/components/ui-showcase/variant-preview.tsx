@@ -8,7 +8,6 @@ type VariantPreviewProps = {
   preview: ReactNode;
   code: string;
   className?: string;
-  layout?: "stack" | "split";
 };
 
 export function VariantPreview({
@@ -17,7 +16,6 @@ export function VariantPreview({
   preview,
   code,
   className,
-  layout = "stack",
 }: VariantPreviewProps) {
   return (
     <article
@@ -33,15 +31,11 @@ export function VariantPreview({
         ) : null}
       </div>
 
-      <div
-        className={cn(
-          layout === "split" && "lg:grid lg:grid-cols-2",
-        )}
-      >
-        <div className="flex min-h-28 items-center justify-center border-b border-[#101820]/8 bg-[linear-gradient(180deg,#fcfaf7_0%,#ffffff_100%)] p-8 lg:min-h-36 lg:border-b-0 lg:border-r">
+      <div className="flex flex-col">
+        <div className="flex min-h-28 items-center justify-center bg-[linear-gradient(180deg,#fcfaf7_0%,#ffffff_100%)] p-8 sm:min-h-32">
           {preview}
         </div>
-        <div className="p-4">
+        <div className="border-t border-[#101820]/8 p-4 sm:p-5">
           <CodeBlock code={code} />
         </div>
       </div>

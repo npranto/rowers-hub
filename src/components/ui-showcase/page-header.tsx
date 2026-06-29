@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 
 type PageHeaderProps = {
   title: string;
+  componentName: string;
   description: string;
   status?: "stable" | "beta" | "draft";
   importPath: string;
@@ -16,6 +17,7 @@ const statusStyles = {
 
 export function PageHeader({
   title,
+  componentName,
   description,
   status = "stable",
   importPath,
@@ -43,9 +45,9 @@ export function PageHeader({
 
       <div className="inline-flex items-center gap-2 rounded-xl border border-[#101820]/10 bg-[#f8f5f0] px-3 py-2 font-mono text-xs text-[#101820]/75">
         <span className="text-[#101820]/45">import</span>
-        <span className="text-[#101820]">Button</span>
+        <span className="text-[#101820]">{componentName}</span>
         <span className="text-[#101820]/45">from</span>
-        <span className="text-emerald-700">{importPath}</span>
+        <span className="text-emerald-700">&quot;{importPath}&quot;</span>
       </div>
     </header>
   );

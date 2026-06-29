@@ -4,6 +4,13 @@ import {
   getShowcaseRoute,
   showcaseComponents,
 } from "@/lib/ui-showcase/registry";
+import { cn } from "@/lib/utils";
+
+const statusStyles = {
+  stable: "bg-emerald-50 text-emerald-700",
+  beta: "bg-amber-50 text-amber-700",
+  draft: "bg-slate-100 text-slate-600",
+} as const;
 
 export default function UiShowcaseIndexPage() {
   return (
@@ -34,7 +41,12 @@ export default function UiShowcaseIndexPage() {
               <h2 className="text-xl font-semibold text-[#101820] group-hover:text-[#24343b]">
                 {component.name}
               </h2>
-              <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700">
+              <span
+                className={cn(
+                  "rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+                  statusStyles[component.status],
+                )}
+              >
                 {component.status}
               </span>
             </div>

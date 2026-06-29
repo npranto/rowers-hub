@@ -1,9 +1,10 @@
 type CodePropValue = string | number | boolean | undefined;
 
-export function formatButtonUsage(
+export function formatComponentUsage(
+  componentName: string,
   props: Record<string, CodePropValue>,
-  children = "Button",
-) {
+  children?: string,
+): string {
   const propLines = Object.entries(props)
     .filter(([, value]) => value !== undefined)
     .map(([key, value]) => {
@@ -16,32 +17,16 @@ export function formatButtonUsage(
       return `  ${key}={${value}}`;
     });
 
-  if (propLines.length === 0) {
-    return `<Button>${children}</Button>`;
+  if (children === undefined) {
+    if (propLines.length === 0) {
+      return `<${componentName} />`;
+    }
+    return `<${componentName}\n${propLines.join("\n")}\n/>`;
   }
 
-  return `<Button\n${propLines.join("\n")}\n>${children}</Button>`;
-}
-
-export function formatHeadingUsage(
-  props: Record<string, CodePropValue>,
-  children = "Heading",
-) {
-  const propLines = Object.entries(props)
-    .filter(([, value]) => value !== undefined)
-    .map(([key, value]) => {
-      if (typeof value === "boolean") {
-        return value ? `  ${key}` : `  ${key}={false}`;
-      }
-      if (typeof value === "string") {
-        return `  ${key}="${value}"`;
-      }
-      return `  ${key}={${value}}`;
-    });
-
   if (propLines.length === 0) {
-    return `<Heading>${children}</Heading>`;
+    return `<${componentName}>${children}</${componentName}>`;
   }
 
-  return `<Heading\n${propLines.join("\n")}\n>${children}</Heading>`;
+  return `<${componentName}\n${propLines.join("\n")}\n>${children}</${componentName}>`;
 }
