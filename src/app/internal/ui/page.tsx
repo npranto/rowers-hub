@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ShowcasePage } from "@/components/ui-showcase/showcase-page";
-import { showcaseComponents } from "@/lib/ui-showcase/registry";
+import {
+  getShowcaseRoute,
+  showcaseComponents,
+} from "@/lib/ui-showcase/registry";
 
 export default function UiShowcaseIndexPage() {
   return (
@@ -24,7 +27,7 @@ export default function UiShowcaseIndexPage() {
         {showcaseComponents.map((component) => (
           <Link
             key={component.slug}
-            href={`/internal/ui/${component.slug}`}
+            href={getShowcaseRoute(component)}
             className="group rounded-2xl border border-[#101820]/10 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-[#101820]/20 hover:shadow-md"
           >
             <div className="mb-4 flex items-center justify-between">

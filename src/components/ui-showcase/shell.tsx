@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ShowcaseMobileNav } from "./mobile-nav";
 import { ShowcaseSidebar } from "./sidebar";
 import { ShowcaseToc, type TocItem } from "./toc";
 
@@ -18,20 +19,7 @@ export function ShowcaseShell({ children, toc }: ShowcaseShellProps) {
         <div className="border-b border-[#101820]/10 bg-[#fcfaf7]/90 px-4 py-3 backdrop-blur lg:hidden">
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm font-semibold text-[#101820]">UI Library</p>
-            <nav className="flex gap-2 overflow-x-auto">
-              <a
-                href="/internal/ui"
-                className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-[#101820]/70"
-              >
-                Overview
-              </a>
-              <a
-                href="/internal/ui/button"
-                className="rounded-lg bg-white px-2.5 py-1.5 text-xs font-medium text-[#101820] shadow-sm"
-              >
-                Button
-              </a>
-            </nav>
+            <ShowcaseMobileNav />
           </div>
         </div>
 

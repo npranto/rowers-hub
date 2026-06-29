@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { showcaseComponents } from "@/lib/ui-showcase/registry";
+import {
+  getShowcaseRoute,
+  showcaseComponents,
+} from "@/lib/ui-showcase/registry";
 import { cn } from "@/lib/utils";
 
 export function ShowcaseSidebar() {
@@ -44,7 +47,7 @@ export function ShowcaseSidebar() {
         </p>
         <ul className="space-y-1">
           {showcaseComponents.map((component) => {
-            const href = `/internal/ui/${component.slug}`;
+            const href = getShowcaseRoute(component);
             const active = pathname === href;
 
             return (

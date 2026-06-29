@@ -12,4 +12,5 @@ export type ShowcaseComponent = {
   description: string;
   importPath: string;
   status: "stable" | "beta" | "draft";
+  route?: string;
 };
