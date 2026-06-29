@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NavLinkItem, isActive, navSections } from ".";
+import { isActive, navSections, NavLinkItem } from ".";
 
 export function MobileNav() {
   const pathname = usePathname() ?? "/";
