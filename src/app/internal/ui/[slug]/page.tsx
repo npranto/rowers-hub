@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { RenderShowcase } from "@/lib/ui-showcase/render-showcase";
+import { RenderShowcase } from "@/lib/showcase/render-showcase";
 import {
   getAllShowcaseSlugs,
   getShowcaseComponent,
-} from "@/lib/ui-showcase/registry";
+} from "@/lib/showcase/registry";
 
 type PageProps = {
   params: Promise<{ slug: string }>;

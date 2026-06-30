@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   getShowcaseRoute,
   showcaseComponents,
-} from "@/lib/ui-showcase/registry";
+} from "@/lib/showcase/registry";
 import { cn } from "@/lib/utils";
 
 export function ShowcaseSidebar() {

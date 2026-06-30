@@ -1,5 +1,5 @@
 import Button from "@/components/ui/button";
-import { defineShowcase, group, show } from "@/lib/ui-showcase/define-showcase";
+import { defineShowcase, group, show } from "@/lib/showcase/define-showcase";
 
 function CartIcon() {
   return (

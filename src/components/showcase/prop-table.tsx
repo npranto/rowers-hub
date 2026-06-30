@@ -1,4 +1,4 @@
-import type { PropDefinition } from "@/lib/ui-showcase/types";
+import type { PropDefinition } from "@/lib/showcase/types";
 import { cn } from "@/lib/utils";
 
 type PropTableProps = {
