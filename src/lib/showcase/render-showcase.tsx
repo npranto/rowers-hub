@@ -1,9 +1,9 @@
-import { PageHeader } from "@/components/ui-showcase/page-header";
-import { CodeBlock } from "@/components/ui-showcase/code-block";
-import { PropTable } from "@/components/ui-showcase/prop-table";
-import { ShowcasePage } from "@/components/ui-showcase/showcase-page";
-import { ShowcaseSection } from "@/components/ui-showcase/showcase-section";
-import { VariantPreview } from "@/components/ui-showcase/variant-preview";
+import { PageHeader } from "@/components/showcase/page-header";
+import { CodeBlock } from "@/components/showcase/code-block";
+import { PropTable } from "@/components/showcase/prop-table";
+import { ShowcasePage } from "@/components/showcase/showcase-page";
+import { ShowcaseSection } from "@/components/showcase/showcase-section";
+import { VariantPreview } from "@/components/showcase/variant-preview";
 import type { ShowcaseConfig } from "./types";
 
 function buildToc(config: ShowcaseConfig) {

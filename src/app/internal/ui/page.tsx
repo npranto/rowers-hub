@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { ShowcasePage } from "@/components/ui-showcase/showcase-page";
+import { ShowcasePage } from "@/components/showcase/showcase-page";
 import {
   getShowcaseRoute,
   showcaseComponents,
-} from "@/lib/ui-showcase/registry";
+} from "@/lib/showcase/registry";
 import { cn } from "@/lib/utils";
 
 const statusStyles = {

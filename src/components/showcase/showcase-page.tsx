@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { ShowcaseShell } from "@/components/ui-showcase/shell";
-import type { TocItem } from "@/components/ui-showcase/toc";
+import { ShowcaseShell } from "@/components/showcase/shell";
+import type { TocItem } from "@/components/showcase/toc";
 
 type ShowcasePageProps = {
   children: ReactNode;

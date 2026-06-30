@@ -29,9 +29,6 @@ export default function SiteFooter() {
             </span>
           </span>
         </Link>
-          <span className="text-xs text-white/70">
-            Your e-commerce destination for rowing excellence.
-          </span>
         </div>
         <nav className="flex flex-row items-center gap-8">
           <Link href="/products" className="hover:text-[#00cfff] transition-colors text-sm font-medium">

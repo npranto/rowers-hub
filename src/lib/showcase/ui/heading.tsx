@@ -1,5 +1,5 @@
 import Heading from "@/components/ui/heading";
-import { defineShowcase, group, show } from "@/lib/ui-showcase/define-showcase";
+import { defineShowcase, group, show } from "@/lib/showcase/define-showcase";
 
 export const headingShowcase = defineShowcase({
   slug: "heading",

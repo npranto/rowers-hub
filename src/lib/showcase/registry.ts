@@ -5,13 +5,17 @@
  *    using show() for JSX previews and group() for sections
  * 3. Import it below and add to the showcaseComponents allowlist
  */
-import { buttonShowcase } from "./showcases/button";
-import { headingShowcase } from "./showcases/heading";
+import { buttonShowcase } from "./ui/button";
+import { headingShowcase } from "./ui/heading";
+import { siteFooterShowcase } from "./ui/site-footer";
+import { siteHeaderShowcase } from "./ui/site-header";
 import type { ShowcaseConfig } from "./types";
 
 export const showcaseComponents: ShowcaseConfig[] = [
   buttonShowcase,
   headingShowcase,
+  siteHeaderShowcase,
+  siteFooterShowcase,
 ];
 
 export function getShowcaseRoute(component: Pick<ShowcaseConfig, "slug">) {
