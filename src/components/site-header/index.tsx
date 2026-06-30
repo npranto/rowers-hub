@@ -94,7 +94,7 @@ export function NavLinkItem({
 }
 
 
-export default function Navbar() {
+export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-foreground/10 bg-background/80 backdrop-blur-md">
       <nav

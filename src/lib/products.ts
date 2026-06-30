@@ -1,6 +1,6 @@
 import "server-only";
 
-import { type Product, type PublicProduct } from "@/types";
+import { type Product } from "@/types";
 
 export const products: Product[] = [
   {
@@ -81,7 +81,7 @@ export const products: Product[] = [
 ];
 
 export function getProducts(): Product[] {
-  return products
+  return products;
 }
 
 export function getProductBySlug(slug: string): Product | undefined {
