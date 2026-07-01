@@ -1,22 +1,23 @@
-'use client'
+'use client';
 
-import { createContext, useMemo, useState, type ReactNode, useContext } from 'react'
-import { type CartLine } from '@/types'
-import { normalizeQuantity } from '@/lib/cart'
+import { createContext, useMemo, type ReactNode, useContext } from 'react';
+import { type CartLine } from '@/types';
+import { CART_LOCAL_STORAGE_KEY, normalizeQuantity } from '@/lib/cart';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 export interface CartContextValue {
-  items: CartLine[]
-  count: number
-  addItem: (itemId: string, quantity: number) => void
-  updateItem: (itemId: string, quantity: number) => void
-  removeItem: (itemId: string) => void
-  clearItems: () => void
+  items: CartLine[];
+  count: number;
+  addItem: (itemId: string, quantity: number) => void;
+  updateItem: (itemId: string, quantity: number) => void;
+  removeItem: (itemId: string) => void;
+  clearItems: () => void;
 }
 
-const CartContext = createContext<CartContextValue | undefined>(undefined)
+const CartContext = createContext<CartContextValue | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartLine[]>([])
+  const [items, setItems] = useLocalStorage<CartLine[]>(CART_LOCAL_STORAGE_KEY, []);
 
   const value = useMemo<CartContextValue>(() => {
     return {
@@ -25,49 +26,53 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       addItem: (itemId, quantity = 1) => {
         setItems(prevItems => {
-          const existingItem = prevItems.find(item => item.slug === itemId)
+          const existingItem = prevItems.find(item => item.slug === itemId);
           if (existingItem) {
             return prevItems.map(item =>
               item.slug === itemId ? { ...item, quantity: item.quantity + quantity } : item,
-            )
+            );
           }
-          return [...prevItems, { slug: itemId, quantity }]
-        })
+          return [...prevItems, { slug: itemId, quantity }];
+        });
       },
 
       updateItem: (itemId, quantity = 1) => {
         setItems(prevItems => {
           return prevItems.map(item =>
             item.slug === itemId ? { ...item, quantity: normalizeQuantity(quantity) } : item,
-          )
-        })
+          );
+        });
       },
 
       removeItem: itemId => {
         setItems(prevItems => {
-          return prevItems.filter(item => item.slug !== itemId)
-        })
+          return prevItems.filter(item => item.slug !== itemId);
+        });
       },
 
       clearItems: () => {
-        setItems([])
+        setItems([]);
       },
-    }
-  }, [items])
+    };
+  }, [items, setItems]);
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
-}
-
-export function CartLogger(): ReactNode {
-  const cart = useCart()
-  console.log('CartLogger', cart)
-  return <pre>{JSON.stringify({ cart }, null, 2)}</pre>
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export function useCart(): CartContextValue {
-  const context = useContext(CartContext)
+  const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error('useCart must be used within a CartProvider')
+    throw new Error('useCart must be used within a CartProvider');
   }
-  return context
+  return context;
+}
+
+export function CartLogger({ className }: { className?: string } = {}): ReactNode {
+  const cart = useCart();
+  console.log('CartLogger', cart);
+  return (
+    <div className={`bg-background/50 p-2 rounded-md ${className}`}>
+      <pre>{JSON.stringify(cart, null, 2)}</pre>
+    </div>
+  );
 }
