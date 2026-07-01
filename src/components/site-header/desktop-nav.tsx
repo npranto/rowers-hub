@@ -1,10 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import {
-  primaryLinks,
-  NavLinkItem,
-} from ".";
+import { NavLinkItem } from "./nav-link-item";
+import { primaryLinks } from "./nav-config";
 
 export function DesktopNav() {
   const pathname = usePathname() ?? "/";
