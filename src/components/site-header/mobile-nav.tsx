@@ -2,12 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { isActive, navSections, NavLinkItem } from ".";
+import { useEffect, useRef, useState } from "react";
+import { isActive, navSections } from "./nav-config";
+import { NavLinkItem } from "./nav-link-item";
+
+function getFocusableElements(container: HTMLElement) {
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  );
+}
 
 export function MobileNav() {
   const pathname = usePathname() ?? "/";
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -20,6 +31,44 @@ export function MobileNav() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== "Tab" || !panelRef.current) return;
+
+      const focusable = getFocusableElements(panelRef.current);
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen || !panelRef.current) return;
+
+    const focusable = getFocusableElements(panelRef.current);
+    focusable[0]?.focus();
+  }, [mobileOpen]);
+
   const cartActive = isActive(pathname, "/cart");
 
   return (
@@ -27,6 +76,7 @@ export function MobileNav() {
       <div className="ml-auto flex items-center gap-2">
         <Link
           href="/cart"
+          aria-label={cartActive ? "Cart, current page" : "Cart"}
           onClick={() => setMobileOpen(false)}
           aria-current={cartActive ? "page" : undefined}
           className={[
@@ -50,10 +100,13 @@ export function MobileNav() {
               strokeLinejoin="round"
             />
           </svg>
-          <span className="hidden sm:inline">Cart</span>
+          <span aria-hidden="true" className="hidden sm:inline">
+            Cart
+          </span>
         </Link>
 
         <button
+          ref={menuButtonRef}
           type="button"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-panel"
@@ -103,11 +156,10 @@ export function MobileNav() {
       ) : null}
 
       <div
+        ref={panelRef}
         id="mobile-nav-panel"
-        className={[
-          "fixed left-0 right-0 top-16 z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-foreground/10 bg-background lg:hidden",
-          mobileOpen ? "block" : "hidden",
-        ].join(" ")}
+        hidden={!mobileOpen}
+        className="fixed left-0 right-0 top-16 z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-foreground/10 bg-background lg:hidden"
       >
         <div className="mx-auto max-w-6xl space-y-6 px-4 py-5 sm:px-6">
           {navSections.map((section) => (

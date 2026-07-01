@@ -13,14 +13,7 @@ export interface CartContextValue {
   clearItems: () => void
 }
 
-export const CartContext = createContext<CartContextValue>({
-  items: [],
-  count: 0,
-  addItem: () => {},
-  updateItem: () => {},
-  removeItem: () => {},
-  clearItems: () => {},
-})
+const CartContext = createContext<CartContextValue | undefined>(undefined)
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartLine[]>([])
@@ -73,7 +66,7 @@ export function CartLogger(): ReactNode {
 
 export function useCart(): CartContextValue {
   const context = useContext(CartContext)
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useCart must be used within a CartProvider')
   }
   return context
