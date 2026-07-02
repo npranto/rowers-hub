@@ -1,10 +1,11 @@
-import { CartLogger } from '@/components/cart'
+import { BlogPreviewSection, FeaturedProductsSection, HeroSection } from '@/components/home';
 
 export default function Home() {
   return (
-    <div>
-      <h1>/ - (Home Page)</h1>
-      <CartLogger />
+    <div className="divide-y divide-[#101820]/8">
+      <HeroSection />
+      <FeaturedProductsSection />
+      <BlogPreviewSection />
     </div>
-  )
+  );
 }
