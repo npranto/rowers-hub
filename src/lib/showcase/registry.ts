@@ -5,27 +5,37 @@
  *    using show() for JSX previews and group() for sections
  * 3. Import it below and add to the showcaseComponents allowlist
  */
-import { buttonShowcase } from "./ui/button";
-import { headingShowcase } from "./ui/heading";
-import { siteFooterShowcase } from "./ui/site-footer";
-import { siteHeaderShowcase } from "./ui/site-header";
-import type { ShowcaseConfig } from "./types";
+import { blogPreviewCardShowcase } from './ui/blog-preview-card';
+import { blogPreviewSectionShowcase } from './ui/blog-preview-section';
+import { buttonShowcase } from './ui/button';
+import { featuredProductCardShowcase } from './ui/featured-product-card';
+import { featuredProductsSectionShowcase } from './ui/featured-products-section';
+import { headingShowcase } from './ui/heading';
+import { heroSectionShowcase } from './ui/hero-section';
+import { siteFooterShowcase } from './ui/site-footer';
+import { siteHeaderShowcase } from './ui/site-header';
+import type { ShowcaseConfig } from './types';
 
 export const showcaseComponents: ShowcaseConfig[] = [
   buttonShowcase,
   headingShowcase,
   siteHeaderShowcase,
   siteFooterShowcase,
+  heroSectionShowcase,
+  featuredProductsSectionShowcase,
+  featuredProductCardShowcase,
+  blogPreviewSectionShowcase,
+  blogPreviewCardShowcase,
 ];
 
-export function getShowcaseRoute(component: Pick<ShowcaseConfig, "slug">) {
+export function getShowcaseRoute(component: Pick<ShowcaseConfig, 'slug'>) {
   return `/internal/ui/${component.slug}`;
 }
 
 export function getShowcaseComponent(slug: string) {
-  return showcaseComponents.find((component) => component.slug === slug);
+  return showcaseComponents.find(component => component.slug === slug);
 }
 
 export function getAllShowcaseSlugs() {
-  return showcaseComponents.map((component) => component.slug);
+  return showcaseComponents.map(component => component.slug);
 }
