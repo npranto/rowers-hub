@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
-import { CodeBlock } from './code-block';
-import { cn } from '@/lib/utils';
+import type { ReactNode } from "react";
+import { CodeBlock } from "./code-block";
+import { cn } from "@/lib/utils";
 
 type VariantPreviewProps = {
   title: string;
@@ -10,12 +10,25 @@ type VariantPreviewProps = {
   className?: string;
 };
 
-export function VariantPreview({ title, description, preview, code, className }: VariantPreviewProps) {
+export function VariantPreview({
+  title,
+  description,
+  preview,
+  code,
+  className,
+}: VariantPreviewProps) {
   return (
-    <article className={cn('overflow-hidden rounded-2xl border border-[#101820]/10 bg-white shadow-sm', className)}>
+    <article
+      className={cn(
+        "overflow-hidden rounded-2xl border border-[#101820]/10 bg-white shadow-sm",
+        className,
+      )}
+    >
       <div className="border-b border-[#101820]/8 px-5 py-4">
         <h3 className="text-base font-semibold text-[#101820]">{title}</h3>
-        {description ? <p className="mt-1 text-sm leading-6 text-[#101820]/65">{description}</p> : null}
+        {description ? (
+          <p className="mt-1 text-sm leading-6 text-[#101820]/65">{description}</p>
+        ) : null}
       </div>
 
       <div className="flex flex-col">

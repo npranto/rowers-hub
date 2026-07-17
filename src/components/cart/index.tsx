@@ -17,7 +17,10 @@ export interface CartContextValue {
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useLocalStorage<CartLine[]>(CART_LOCAL_STORAGE_KEY, []);
+  const [items, setItems] = useLocalStorage<CartLine[]>(
+    CART_LOCAL_STORAGE_KEY,
+    [],
+  );
 
   const value = useMemo<CartContextValue>(() => {
     return {
@@ -29,7 +32,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
           const existingItem = prevItems.find(item => item.slug === itemId);
           if (existingItem) {
             return prevItems.map(item =>
-              item.slug === itemId ? { ...item, quantity: item.quantity + quantity } : item,
+              item.slug === itemId
+                ? { ...item, quantity: item.quantity + quantity }
+                : item,
             );
           }
           return [...prevItems, { slug: itemId, quantity }];
@@ -39,7 +44,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
       updateItem: (itemId, quantity = 1) => {
         setItems(prevItems => {
           return prevItems.map(item =>
-            item.slug === itemId ? { ...item, quantity: normalizeQuantity(quantity) } : item,
+            item.slug === itemId
+              ? { ...item, quantity: normalizeQuantity(quantity) }
+              : item,
           );
         });
       },
@@ -67,7 +74,9 @@ export function useCart(): CartContextValue {
   return context;
 }
 
-export function CartLogger({ className }: { className?: string } = {}): ReactNode {
+export function CartLogger({
+  className,
+}: { className?: string } = {}): ReactNode {
   const cart = useCart();
   console.log('CartLogger', cart);
   return (
