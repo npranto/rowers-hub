@@ -7,7 +7,7 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-foreground/10 bg-background/80 backdrop-blur-md">
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex min-h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 sm:px-8">
+        className="mx-auto flex min-h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
           aria-label="Rowers Hub home"

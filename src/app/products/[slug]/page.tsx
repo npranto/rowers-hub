@@ -1,8 +1,8 @@
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import AddToCart from '@/components/add-to-cart';
 import { formatPrice } from '@/lib/pricing';
 import { getProductBySlug, getProducts } from '@/lib/products';
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
 
 export const generateStaticParams = () => {
   const allProducts = getProducts();
@@ -94,7 +94,11 @@ export default async function ProductDetailsPage({
           </div>
 
           <div className="mt-8">
-            <AddToCart itemId={product.slug} label="Add to cart" />
+            <AddToCart
+              itemId={product.slug}
+              label="Add to cart"
+              redirectTo="/cart"
+            />
           </div>
         </section>
       </div>
