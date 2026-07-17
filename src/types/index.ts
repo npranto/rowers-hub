@@ -36,6 +36,8 @@ export type BlogPost = {
   /** ISO 8601 date (YYYY-MM-DD). */
   date: string
   readingTime: string
+  image: string
+  imageAlt: string
   sections: BlogSection[]
 }
 
