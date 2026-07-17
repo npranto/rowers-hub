@@ -11,40 +11,40 @@ export type NavSection = {
 
 export const navSections: NavSection[] = [
   {
-    title: "Browse",
+    title: 'Browse',
     links: [
-      { href: "/", label: "Home" },
-      { href: "/products", label: "Products" },
-      { href: "/blog", label: "Blog" },
+      { href: '/', label: 'Home' },
+      { href: '/products', label: 'Products' },
+      { href: '/blog', label: 'Blog' },
     ],
   },
   {
-    title: "Examples",
+    title: 'Examples',
     links: [
       {
-        href: "/products/sample-product",
-        label: "Product Item",
+        href: '/products/sample-product',
+        label: 'Product Item',
       },
       {
-        href: "/blog/sample-post",
-        label: "Blog Post",
+        href: '/blog/building-consistency-with-low-impact-rowing',
+        label: 'Blog Post',
       },
     ],
   },
   {
-    title: "Checkout",
+    title: 'Checkout',
     links: [
-      { href: "/cart", label: "Cart" },
-      { href: "/checkout", label: "Checkout" },
-      { href: "/checkout-success", label: "Checkout ✅" },
-      { href: "/checkout-cancel", label: "Checkout ❌" },
+      { href: '/cart', label: 'Cart' },
+      { href: '/checkout', label: 'Checkout' },
+      { href: '/checkout-success', label: 'Checkout ✅' },
+      { href: '/checkout-cancel', label: 'Checkout ❌' },
     ],
   },
 ];
 
-export const primaryLinks = navSections.flatMap((section) => section.links);
+export const primaryLinks = navSections.flatMap(section => section.links);
 
 export function isActive(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
+  if (href === '/') return pathname === '/';
   return pathname.toLowerCase() === href.toLowerCase();
 }
