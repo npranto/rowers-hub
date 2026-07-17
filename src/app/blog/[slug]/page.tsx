@@ -82,8 +82,10 @@ export default async function BlogItemPage({
             <span>{post.readingTime}</span>
           </p>
 
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-[#101820] sm:text-5xl sm:leading-[1.1]">
-            {post.title}
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-[#101820] sm:text-5xl sm:leading-[1.1]">
+            <span className="inline bg-yellow-200 px-2 py-1 rounded shadow-[0_2px_8px_rgba(247,223,30,0.11)]">
+              {post.title}
+            </span>
           </h1>
 
           <p className="mt-5 text-lg leading-relaxed text-[#101820]/65 sm:text-xl">
