@@ -2,7 +2,7 @@ import { formatPrice } from '@/lib/pricing';
 import { Product } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import AddToCart from '../add-to-cart';
+import AddToCart from '../../add-to-cart';
 
 type FeaturedProductCardProps = {
   product: Product;
@@ -11,16 +11,13 @@ type FeaturedProductCardProps = {
 export default function FeaturedProductCard({ product }: FeaturedProductCardProps) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-3xl border border-[#101820]/8 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
-      <Link
-        href={`/products/${product.slug}`}
-        aria-label={`View ${product.name}`}
-        className="block overflow-hidden">
+      <Link href={`/products/${product.slug}`} aria-label={`View ${product.name}`} className="block overflow-hidden">
         <div className="relative aspect-[4/3] bg-[#eee7db] transition duration-300 group-hover:bg-[#e8e0d2]">
           <Image
             src={product.image}
             alt={product.imageAlt}
             fill
-            className="object-contain p-6 transition duration-300 group-hover:scale-[1.02]"
+            className="object-contain transition duration-300 group-hover:scale-[1.02]"
             sizes="(min-width: 768px) 33vw, 100vw"
           />
         </div>

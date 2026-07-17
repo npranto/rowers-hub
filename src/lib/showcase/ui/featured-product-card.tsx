@@ -1,39 +1,35 @@
-import FeaturedProductCard from "@/components/home/featured-product-card";
-import { products } from "@/lib/products";
-import { defineShowcase, group, show } from "@/lib/showcase/define-showcase";
+import FeaturedProductCard from '@/components/home/featured-products-section/featured-product-card';
+import { products } from '@/lib/products';
+import { defineShowcase, group, show } from '@/lib/showcase/define-showcase';
 
 const sampleProduct = products[0]!;
 
 export const featuredProductCardShowcase = defineShowcase({
-  slug: "featured-product-card",
-  name: "Featured Product Card",
-  description:
-    "Product card with image, pricing, add-to-cart action, and detail link.",
-  importPath: "@/components/home/featured-product-card",
-  status: "stable",
-  metadataDescription:
-    "Featured product card layout with image, price, and commerce actions.",
+  slug: 'featured-product-card',
+  name: 'Featured Product Card',
+  description: 'Product card with image, pricing, add-to-cart action, and detail link.',
+  importPath: '@/components/home/featured-product-card',
+  status: 'stable',
+  metadataDescription: 'Featured product card layout with image, price, and commerce actions.',
   groups: [
-    group("default", "Default", {
-      description: "Single product card used inside the featured products grid.",
+    group('default', 'Default', {
+      description: 'Single product card used inside the featured products grid.',
       items: [
         show(
-          "With sale price",
+          'With sale price',
           <div className="w-full max-w-sm">
             <FeaturedProductCard product={sampleProduct} />
           </div>,
           `<FeaturedProductCard product={product} />`,
         ),
         show(
-          "Without compare-at price",
+          'Without compare-at price',
           <div className="w-full max-w-sm">
-            <FeaturedProductCard
-              product={{ ...sampleProduct, compareAtPrice: undefined }}
-            />
+            <FeaturedProductCard product={{ ...sampleProduct, compareAtPrice: undefined }} />
           </div>,
           `<FeaturedProductCard product={product} />`,
           {
-            description: "Omit compareAtPrice when the product is not on sale.",
+            description: 'Omit compareAtPrice when the product is not on sale.',
           },
         ),
       ],
@@ -41,10 +37,10 @@ export const featuredProductCardShowcase = defineShowcase({
   ],
   props: [
     {
-      name: "product",
-      type: "Product",
+      name: 'product',
+      type: 'Product',
       required: true,
-      description: "Product data including image, pricing, and slug for links.",
+      description: 'Product data including image, pricing, and slug for links.',
     },
   ],
   usage: [

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import FeaturedProductCard from '@/components/home/featured-product-card';
+import FeaturedProductCard from '@/components/home/featured-products-section/featured-product-card';
 import { products } from '@/lib/products';
 
 export default function FeaturedProductsSection() {

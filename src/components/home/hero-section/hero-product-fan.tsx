@@ -7,7 +7,6 @@ type HeroProductFanProps = {
 };
 
 const FAN_ROTATIONS = [-7, 0, 7] as const;
-// const FAN_Z_INDEX = [1, 3, 2] as const;
 
 export default function HeroProductFan({ products }: HeroProductFanProps) {
   return (
