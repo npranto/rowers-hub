@@ -24,10 +24,13 @@ export type Product = {
 /** Safe to pass to Client Components or serialize in RSC payloads. */
 export type PublicProduct = Omit<Product, 'stripePriceId' | 'shopifyVariantId'>
 
-export type BlogSection = {
-  heading: string
-  body: string
-}
+/** CMS-style content blocks. Extend with new `type` variants as needed. */
+export type BlogBlock =
+  | { type: 'heading'; text: string; level?: 2 | 3 }
+  | { type: 'paragraph'; text: string }
+  | { type: 'image'; src: string; alt: string; caption?: string }
+  | { type: 'video'; src: string; poster?: string; caption?: string }
+  | { type: 'code'; code: string; language?: string }
 
 export type BlogPost = {
   slug: string
@@ -38,7 +41,7 @@ export type BlogPost = {
   readingTime: string
   image: string
   imageAlt: string
-  sections: BlogSection[]
+  content: BlogBlock[]
 }
 
 export type CartLine = {
