@@ -1,0 +1,18 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="calm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1B3A2F"/>
+      <stop offset="50%" stop-color="#2F6B57"/>
+      <stop offset="100%" stop-color="#7DB9A0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#calm)"/>
+  <circle cx="200" cy="180" r="160" fill="#C8E6D4" opacity="0.28"/>
+  <circle cx="980" cy="620" r="220" fill="#122820" opacity="0.35"/>
+  <path d="M220 520 C360 420 480 560 620 470 C760 380 880 500 1040 430" stroke="#E4F5EC" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+  <path d="M260 560 C400 470 510 590 650 510 C790 430 900 540 1060 470" stroke="#A8D9C2" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <circle cx="600" cy="360" r="70" fill="#E4F5EC" opacity="0.2"/>
+  <circle cx="600" cy="360" r="42" fill="#E4F5EC" opacity="0.35"/>
+  <circle cx="600" cy="360" r="18" fill="#F7FBF8"/>
+  <text x="72" y="92" fill="#E4F5EC" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="4">RECOVERY</text>
+</svg>

@@ -8,6 +8,8 @@ export const blogPosts: BlogPost[] = [
       "Why rowing is a strong foundation for sustainable cardio without beating up your joints.",
     date: "2026-06-25",
     readingTime: "4 min read",
+    image: "/blog/consistency-rowing.svg",
+    imageAlt: "Abstract teal water and rower silhouette for consistency training",
     sections: [
       {
         heading: "Start with repeatability",
@@ -33,6 +35,8 @@ export const blogPosts: BlogPost[] = [
       "A practical framework for building a home fitness habit around energy, space, and time.",
     date: "2026-06-25",
     readingTime: "5 min read",
+    image: "/blog/at-home-workouts.svg",
+    imageAlt: "Warm amber abstract home workout illustration",
     sections: [
       {
         heading: "Remove friction",
@@ -58,6 +62,8 @@ export const blogPosts: BlogPost[] = [
       "How mobility, sleep, and easier sessions help you train more consistently.",
     date: "2026-06-25",
     readingTime: "3 min read",
+    image: "/blog/recovery-days.svg",
+    imageAlt: "Calm sage green recovery and mobility illustration",
     sections: [
       {
         heading: "Recovery is part of training",

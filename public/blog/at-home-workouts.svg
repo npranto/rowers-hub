@@ -1,0 +1,20 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="warm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3A1C14"/>
+      <stop offset="45%" stop-color="#B4532A"/>
+      <stop offset="100%" stop-color="#E8A35A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#warm)"/>
+  <circle cx="980" cy="160" r="200" fill="#F6C97A" opacity="0.45"/>
+  <circle cx="160" cy="640" r="240" fill="#2A120E" opacity="0.35"/>
+  <rect x="340" y="220" width="520" height="360" rx="36" fill="#1A100E" opacity="0.35"/>
+  <rect x="380" y="260" width="440" height="280" rx="28" fill="#FFF7ED" opacity="0.12"/>
+  <rect x="430" y="320" width="340" height="18" rx="9" fill="#FFE8C2" opacity="0.7"/>
+  <rect x="430" y="360" width="260" height="18" rx="9" fill="#FFD399" opacity="0.55"/>
+  <rect x="430" y="400" width="300" height="18" rx="9" fill="#FFE8C2" opacity="0.45"/>
+  <circle cx="600" cy="510" r="36" fill="#F6C97A" opacity="0.85"/>
+  <path d="M600 486 V534 M576 510 H624" stroke="#3A1C14" stroke-width="6" stroke-linecap="round"/>
+  <text x="72" y="92" fill="#FFF4E5" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="4">AT HOME</text>
+</svg>
