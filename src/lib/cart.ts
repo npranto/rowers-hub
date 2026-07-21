@@ -2,10 +2,11 @@ import { CartLine, Product } from '@/types';
 import { getProductBySlug } from './products';
 
 export const CART_LOCAL_STORAGE_KEY = 'rowers-hub-cart';
+export const MAX_CART_QUANTITY = 10;
 
 export function normalizeQuantity(quantity: number): number {
-  if (!Number.isFinite(quantity) || quantity < 0) return 1;
-  return Math.max(Math.min(Math.floor(quantity), 10), 1);
+  if (!Number.isFinite(quantity)) return 1;
+  return Math.max(Math.min(Math.floor(quantity), MAX_CART_QUANTITY), 1);
 }
 
 export type CartLineWithProduct = {

@@ -1,6 +1,10 @@
 'use client';
 
-import { getCartLinesWithProducts, getCartSubtotal } from '@/lib/cart';
+import {
+  getCartLinesWithProducts,
+  getCartSubtotal,
+  MAX_CART_QUANTITY,
+} from '@/lib/cart';
 import { useCart } from '../cart';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/pricing';
@@ -14,11 +18,11 @@ export default function CartSummary() {
   if (lines.length === 0) {
     return (
       <>
-        <h2 className="text-2xl font-semibold">Your cart is empty</h2>
+        <h1 className="text-2xl font-semibold">Your cart is empty</h1>
         <p className="mt-3 text-black/65">Add a product before checkout.</p>
         <Link
           href="/products"
-          className="mt-6 inline-flex rounded-full bg-[#101820] px-5 py-3 text-sm font-semibold text-white hover:bg-[#24343b]">
+          className="mt-6 inline-flex rounded-full bg-[#101820] px-5 py-3 text-sm font-semibold text-white hover:bg-[#24343b] focus:outline-none focus:ring-2 focus:ring-[#101820] focus:ring-offset-2">
           Shop products
         </Link>
       </>
@@ -27,17 +31,17 @@ export default function CartSummary() {
 
   return (
     <>
-      <h2 className="text-2xl font-semibold">Cart</h2>
+      <h1 className="text-2xl font-semibold">Cart</h1>
 
       <section
         className="mt-4 sm:mt-6 rounded-3xl bg-white shadow-sm"
-        aria-label="Cart summary">
+        aria-label="Cart items">
         <ul className="divide-y divide-black/10">
           {lines.map(line => (
             <li key={line.product.slug} className="p-6">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="font-semibold">{line.product.name}</h3>
+                  <h2 className="font-semibold">{line.product.name}</h2>
                   <p className="mt-1 text-sm text-black/55">
                     {line.product.subtitle}
                   </p>
@@ -46,7 +50,9 @@ export default function CartSummary() {
                   </p>
                 </div>
 
-                <p className="font-semibold">{formatPrice(line.lineTotal)}</p>
+                <p className="font-semibold" aria-label="Line total">
+                  {formatPrice(line.lineTotal)}
+                </p>
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-4">
@@ -62,20 +68,22 @@ export default function CartSummary() {
                     value={line.quantity}
                     onChange={event =>
                       updateItem(line.product.slug, Number(event.target.value))
-                    }
-                    aria-label={`Select quantity for ${line.product.name}`}>
-                    {Array.from({ length: 9 }, (_, index) => index + 1).map(
-                      qty => (
-                        <option
-                          key={qty}
-                          value={qty}
-                          className="bg-white text-black text-sm">
-                          {qty}
-                        </option>
-                      ),
-                    )}
+                    }>
+                    {Array.from(
+                      { length: MAX_CART_QUANTITY },
+                      (_, index) => index + 1,
+                    ).map(qty => (
+                      <option
+                        key={qty}
+                        value={qty}
+                        className="bg-white text-black text-sm">
+                        {qty}
+                      </option>
+                    ))}
                   </select>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <span
+                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    aria-hidden="true">
                     <svg width="18" height="18" fill="none" viewBox="0 0 20 20">
                       <path
                         d="M7 8l3 3 3-3"
@@ -97,7 +105,8 @@ export default function CartSummary() {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
-                    viewBox="0 0 24 24">
+                    viewBox="0 0 24 24"
+                    aria-hidden="true">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -113,8 +122,15 @@ export default function CartSummary() {
       </section>
 
       <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-5">
-        <p className="font-semibold">Subtotal</p>
-        <p className="text-xl font-semibold">{formatPrice(subtotal)}</p>
+        <p className="font-semibold" id="cart-subtotal-label">
+          Subtotal
+        </p>
+        <p
+          className="text-xl font-semibold"
+          aria-live="polite"
+          aria-labelledby="cart-subtotal-label">
+          {formatPrice(subtotal)}
+        </p>
       </div>
 
       <Link

@@ -8,7 +8,7 @@ import { useLocalStorage } from '@/hooks/use-local-storage';
 export interface CartContextValue {
   items: CartLine[];
   count: number;
-  addItem: (itemId: string, quantity: number) => void;
+  addItem: (itemId: string, quantity?: number) => void;
   updateItem: (itemId: string, quantity: number) => void;
   removeItem: (itemId: string) => void;
   clearItems: () => void;
@@ -25,36 +25,46 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const value = useMemo<CartContextValue>(() => {
     return {
       items,
-      count: items.reduce((acc, item) => acc + item.quantity, 0),
+      count: items.reduce(
+        (acc, item) => acc + normalizeQuantity(item.quantity),
+        0,
+      ),
 
       addItem: (itemId, quantity = 1) => {
+        const addQty = Math.floor(quantity);
+        if (!itemId.trim() || !Number.isFinite(quantity) || addQty < 1) return;
+
         setItems(prevItems => {
           const existingItem = prevItems.find(item => item.slug === itemId);
           if (existingItem) {
             return prevItems.map(item =>
               item.slug === itemId
-                ? { ...item, quantity: item.quantity + quantity }
+                ? {
+                    ...item,
+                    quantity: normalizeQuantity(item.quantity + addQty),
+                  }
                 : item,
             );
           }
-          return [...prevItems, { slug: itemId, quantity }];
+          return [
+            ...prevItems,
+            { slug: itemId, quantity: normalizeQuantity(addQty) },
+          ];
         });
       },
 
-      updateItem: (itemId, quantity = 1) => {
-        setItems(prevItems => {
-          return prevItems.map(item =>
+      updateItem: (itemId, quantity) => {
+        setItems(prevItems =>
+          prevItems.map(item =>
             item.slug === itemId
               ? { ...item, quantity: normalizeQuantity(quantity) }
               : item,
-          );
-        });
+          ),
+        );
       },
 
       removeItem: itemId => {
-        setItems(prevItems => {
-          return prevItems.filter(item => item.slug !== itemId);
-        });
+        setItems(prevItems => prevItems.filter(item => item.slug !== itemId));
       },
 
       clearItems: () => {
@@ -72,16 +82,4 @@ export function useCart(): CartContextValue {
     throw new Error('useCart must be used within a CartProvider');
   }
   return context;
-}
-
-export function CartLogger({
-  className,
-}: { className?: string } = {}): ReactNode {
-  const cart = useCart();
-  console.log('CartLogger', cart);
-  return (
-    <div className={`bg-background/50 p-2 rounded-md ${className}`}>
-      <pre>{JSON.stringify(cart, null, 2)}</pre>
-    </div>
-  );
 }
