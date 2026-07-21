@@ -1,39 +1,47 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
-export function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>] {
-  const isBrowser = typeof window !== 'undefined';
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T,
+): [T, Dispatch<SetStateAction<T>>] {
+  const [value, setValue] = useState<T>(initialValue);
+  const [hydrated, setHydrated] = useState(false);
 
-  const [value, setValue] = useState<T>(() => {
-    if (!isBrowser) return initialValue;
+  useEffect(() => {
     try {
-      const item = window.localStorage.getItem(key);
-      return item ? (JSON.parse(item) as T) : initialValue;
+      const stored = window.localStorage.getItem(key);
+      if (stored) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setValue(JSON.parse(stored));
+      }
     } catch {
-      return initialValue;
+      setValue(initialValue);
+    } finally {
+      setHydrated(true);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   useEffect(() => {
-    if (!isBrowser) return;
-    window.localStorage.setItem(key, JSON.stringify(value));
-  }, [isBrowser, key, value]);
+    if (!hydrated) return;
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch {}
+  }, [hydrated, value, key]);
 
-  // update local state if localStorage changes elsewhere
+  // optionally: for sync between tabs
   useEffect(() => {
-    if (!isBrowser) return;
+    if (!hydrated) return;
     const handler = (event: StorageEvent) => {
-      if (event.key === key && event.newValue) {
+      if (event.key === key && event.newValue !== null) {
         try {
           setValue(JSON.parse(event.newValue));
-        } catch {
-          // ignore parse errors (e.g. if localStorage is corrupted)
-        }
+        } catch {}
       }
     };
     window.addEventListener('storage', handler);
     return () => window.removeEventListener('storage', handler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+  }, [hydrated, key]);
 
   return [value, setValue];
 }
