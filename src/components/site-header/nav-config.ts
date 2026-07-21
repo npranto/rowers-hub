@@ -22,7 +22,7 @@ export const navSections: NavSection[] = [
     title: 'Examples',
     links: [
       {
-        href: '/products/sample-product',
+        href: '/products/hydrow-origin',
         label: 'Product Item',
       },
       {
