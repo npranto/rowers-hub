@@ -59,7 +59,7 @@ export default async function ProductDetailsPage({
   if (!product) return notFound();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-14">
+    <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
       <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
         <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-[#eee7db] shadow-sm">
           <Image

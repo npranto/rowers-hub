@@ -14,7 +14,9 @@ export type CartLineWithProduct = {
   lineTotal: number;
 };
 
-export function getCartLinesWithProducts(items: CartLine[]): CartLineWithProduct[] {
+export function getCartLinesWithProducts(
+  items: CartLine[],
+): CartLineWithProduct[] {
   return items
     .map(item => {
       const product = getProductBySlug(item.slug);
@@ -31,5 +33,8 @@ export function getCartLinesWithProducts(items: CartLine[]): CartLineWithProduct
 }
 
 export function getCartSubtotal(items: CartLine[]): number {
-  return getCartLinesWithProducts(items).reduce((acc, item) => acc + item.lineTotal, 0);
+  return getCartLinesWithProducts(items).reduce(
+    (acc, item) => acc + item.lineTotal,
+    0,
+  );
 }
