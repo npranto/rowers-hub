@@ -6,33 +6,15 @@ import {
   MAX_CART_QUANTITY,
 } from '@/lib/cart';
 import { useCart } from '../cart';
-import Link from 'next/link';
 import { formatPrice } from '@/lib/pricing';
 
 export default function CartSummary() {
   const { items, updateItem, removeItem } = useCart();
-
   const lines = getCartLinesWithProducts(items);
   const subtotal = getCartSubtotal(items);
 
-  if (lines.length === 0) {
-    return (
-      <>
-        <h1 className="text-2xl font-semibold">Your cart is empty</h1>
-        <p className="mt-3 text-black/65">Add a product before checkout.</p>
-        <Link
-          href="/products"
-          className="mt-6 inline-flex rounded-full bg-[#101820] px-5 py-3 text-sm font-semibold text-white hover:bg-[#24343b] focus:outline-none focus:ring-2 focus:ring-[#101820] focus:ring-offset-2">
-          Shop products
-        </Link>
-      </>
-    );
-  }
-
   return (
     <>
-      <h1 className="text-2xl font-semibold">Cart</h1>
-
       <section
         className="mt-4 sm:mt-6 rounded-3xl bg-white shadow-sm"
         aria-label="Cart items">
@@ -132,12 +114,6 @@ export default function CartSummary() {
           {formatPrice(subtotal)}
         </p>
       </div>
-
-      <Link
-        href="/checkout"
-        className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#101820] px-5 py-3 text-sm font-semibold text-white hover:bg-[#24343b] focus:outline-none focus:ring-2 focus:ring-[#101820] focus:ring-offset-2">
-        Continue to checkout
-      </Link>
     </>
   );
 }
