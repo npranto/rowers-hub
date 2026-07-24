@@ -24,7 +24,7 @@ export default function CartPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-      <h1 className="text-2xl font-semibold">Cart</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">Cart</h1>
 
       <CartSummary />
 
