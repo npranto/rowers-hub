@@ -1,9 +1,14 @@
-import { CartLineWithProduct, MAX_CART_QUANTITY } from '@/lib/cart';
+import { MAX_CART_QUANTITY } from '@/lib/cart';
 import { getProductBySlug } from '@/lib/products';
 import { getStripeClient } from '@/lib/stripe';
-import { CartLine, Product } from '@/types';
+import { Product } from '@/types';
 
 export const runtime = 'nodejs';
+
+type ValidatedCartLine = {
+  product: Product;
+  quantity: number;
+};
 
 export async function GET() {
   return new Response('`/api/checkout` - Checkout API Route');
@@ -15,11 +20,11 @@ const PRICE_ID_BY_PRODUCT_ID_MAPPING: Record<string, string | undefined> = {
   'hydrow-arc': process.env.STRIPE_PRICE_ID_HYDROW_ARC,
 };
 
-const isRealStripePriceId = (value: string | undefined): boolean => {
+const isRealStripePriceId = (value: string | undefined): value is string => {
   return (
     typeof value === 'string' &&
-    value?.startsWith('price_') &&
-    !value?.includes('REPLACE')
+    value.startsWith('price_') &&
+    !value.includes('REPLACE')
   );
 };
 
@@ -33,20 +38,17 @@ const normalizeQuantity = (quantity: unknown): number => {
   return Math.max(Math.min(Math.floor(quantity), MAX_CART_QUANTITY), 1);
 };
 
-function validateCart(items: CartLine[] | undefined): CartLineWithProduct[] {
+function validateCart(items: unknown): ValidatedCartLine[] {
   if (!Array.isArray(items)) return [];
 
   return items
-    .map(item => {
-      const product = getProductBySlug(item.slug);
+    .map((item: { slug: string; quantity: number }) => {
+      const product = getProductBySlug(item?.slug || '');
       if (!product) return null;
-      const quantity = normalizeQuantity(item.quantity);
-      return {
-        product,
-        quantity,
-      };
+      const quantity = normalizeQuantity(item?.quantity);
+      return { product, quantity };
     })
-    .filter((item): item is CartLineWithProduct => item !== null);
+    .filter((item): item is ValidatedCartLine => item !== null);
 }
 
 export async function POST(request: Request) {
@@ -68,14 +70,25 @@ export async function POST(request: Request) {
       items: any[];
     } = await request.json();
 
-    if (!email || !fullName || !address || !city || !postalCode || !items) {
+    if (
+      typeof email !== 'string' ||
+      typeof fullName !== 'string' ||
+      typeof address !== 'string' ||
+      typeof city !== 'string' ||
+      typeof postalCode !== 'string' ||
+      !email.trim() ||
+      !fullName.trim() ||
+      !address.trim() ||
+      !city.trim() ||
+      !postalCode.trim()
+    ) {
       return Response.json(
         { error: 'Missing required fields' },
         { status: 400 },
       );
     }
 
-    const validatedCart = validateCart(items) as CartLineWithProduct[];
+    const validatedCart = validateCart(items);
 
     if (validatedCart.length === 0) {
       return Response.json(
@@ -99,51 +112,60 @@ export async function POST(request: Request) {
       })),
     );
 
-    const lineItems = validatedCart.map(item =>
-      isRealStripePriceId(getStripePriceId(item.product))
-        ? {
-            price: getStripePriceId(item.product),
-            quantity: item.quantity,
-          }
-        : {
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name: item.product.name,
-                description: item.product.description,
-              },
-              unit_amount: item.product.price,
-            },
-            quantity: item.quantity,
+    const shippingSummary = JSON.stringify({
+      fullName: fullName.trim(),
+      address: address.trim(),
+      city: city.trim(),
+      postalCode: postalCode.trim(),
+    });
+
+    const lineItems = validatedCart.map(item => {
+      const priceId = getStripePriceId(item.product);
+      if (priceId) {
+        return { price: priceId, quantity: item.quantity };
+      }
+
+      return {
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: item.product.name,
+            description: item.product.description,
           },
-    );
+          unit_amount: item.product.price,
+        },
+        quantity: item.quantity,
+      };
+    });
 
     const stripe = getStripeClient();
 
+    const sharedMetadata = {
+      cart: metadataCart,
+      shipping: shippingSummary,
+      source: 'rowers-hub-1.0.0',
+    };
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      payment_method_types: ['card', 'paypal'],
-      customer_email: email || undefined,
+      payment_method_types: ['card'],
+      customer_email: email.trim(),
       line_items: lineItems,
       success_url: `${siteUrl}/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/checkout-cancel`,
-      client_reference_id: `rowers-hub-1.0.0`,
-      metadata: {
-        cart: metadataCart,
-        source: 'rowers-hub-1.0.0',
-      },
+      client_reference_id: 'rowers-hub-1.0.0',
+      metadata: sharedMetadata,
       payment_intent_data: {
-        description: `RowersHub - Checkout: ${validatedCart.map(item => item.product.name + ' x ' + item.quantity).join(', ')}`,
-        metadata: {
-          cart: metadataCart,
-          source: 'rowers-hub-1.0.0',
-        },
+        description: `RowersHub - Checkout: ${validatedCart
+          .map(item => `${item.product.name} x ${item.quantity}`)
+          .join(', ')}`,
+        metadata: sharedMetadata,
       },
     });
 
     if (!session.url) {
       return Response.json(
-        { error: 'Failed to create Stripe checkout session' },
+        { error: 'Unable to start checkout. Please try again.' },
         { status: 500 },
       );
     }
@@ -152,11 +174,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Checkout session error:', error);
     return Response.json(
-      {
-        error:
-          'Failed to create Stripe checkout session: ' +
-          (error instanceof Error ? error.message : 'Unknown error'),
-      },
+      { error: 'Unable to start checkout. Please try again.' },
       { status: 500 },
     );
   }

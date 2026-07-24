@@ -39,19 +39,20 @@ export default function CheckoutInfo() {
         }),
       });
 
+      const data = (await response.json().catch(() => null)) as {
+        url?: string;
+        error?: string;
+      } | null;
+
       if (!response.ok) {
+        throw new Error(data?.error || 'Unable to checkout. Please try again.');
+      }
+
+      if (!data?.url) {
         throw new Error('Unable to checkout. Please try again.');
       }
 
-      const data = await response.json();
-
-      console.log(data);
-
-      if (!data.url) {
-        throw new Error('Unable to checkout. Please try again.');
-      }
-
-      // window.location.href = data?.url;
+      window.location.href = data.url;
     } catch (error) {
       setError(
         error instanceof Error
