@@ -21,6 +21,8 @@ export default function CheckoutInfo() {
     setIsLoading(true);
     setError('');
 
+    console.log({ email, fullName, address, city, postalCode, items });
+
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
@@ -43,11 +45,13 @@ export default function CheckoutInfo() {
 
       const data = await response.json();
 
+      console.log(data);
+
       if (!data.url) {
         throw new Error('Unable to checkout. Please try again.');
       }
 
-      window.location.href = data?.url;
+      // window.location.href = data?.url;
     } catch (error) {
       setError(
         error instanceof Error
@@ -183,7 +187,7 @@ export default function CheckoutInfo() {
       </div>
 
       <aside>
-        <h2 className="text-2xl font-semibold">Order Summary</h2>
+        <h2 className="text-3xl font-semibold tracking-tight">Order Summary</h2>
         <div className="mt-4 sm:mt-6">
           <CartSummary />
         </div>

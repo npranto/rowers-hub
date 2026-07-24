@@ -1,0 +1,24 @@
+import 'server-only';
+import Stripe from 'stripe';
+
+let stripeClient: Stripe | null = null;
+
+export function getStripeClient(): Stripe {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error('STRIPE_SECRET_KEY is not set');
+  }
+
+  if (!stripeClient) {
+    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2026-05-27.dahlia',
+      appInfo: {
+        name: 'rowers-hub-1.0.0',
+        version: '1.0.0',
+      },
+    });
+  }
+
+  console.log('stripeClient', stripeClient);
+
+  return stripeClient;
+}
